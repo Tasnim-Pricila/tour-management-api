@@ -14,3 +14,8 @@ exports.getTourDetailsServices = async (id) => {
     const tour = await Tour.find({ _id: id });
     return tour;
 }
+
+exports.updateTourDetailsServices = async (id, data) => {
+    const tour = await Tour.updateOne({ _id: id }, {$set: data}, { runValidators: true });
+    return tour;
+}

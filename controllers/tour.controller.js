@@ -1,4 +1,4 @@
-const { getTourServices, createTourServices, getTourDetailsServices } = require("../services/tour.services")
+const { getTourServices, createTourServices, getTourDetailsServices, updateTourDetailsServices } = require("../services/tour.services")
 
 exports.createTours = async (req, res, next) => {
     try {
@@ -45,6 +45,32 @@ exports.getTourDetails = async (req, res, next) => {
         res.status(400).send({
             status: 'fail',
             message: "Data Finding Failed.",
+            error: error.message
+        })
+    }
+}
+exports.updateTourDetails = async (req, res, next) => {
+    try {
+        const { id } = req.params
+        const result = await updateTourDetailsServices(id, req.body);
+        if (result.modifiedCount > 0) {
+            res.status(200).send({
+                status: 'success',
+                message: "Data updated Successfully.",
+                data: result
+            })
+        }
+        else if (result.modifiedCount === 0) {
+            res.status(400).send({
+                status: 'fail',
+                message: "Data is found but already up to date",
+                data: result
+            })
+        }
+    } catch (error) {
+        res.status(400).send({
+            status: 'fail',
+            message: "Data update Failed.",
             error: error.message
         })
     }
