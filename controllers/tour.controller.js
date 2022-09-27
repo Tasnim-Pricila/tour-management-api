@@ -17,8 +17,30 @@ exports.createTours = async (req, res, next) => {
     }
 }
 exports.getTours = async (req, res, next) => {
+
+    let filters = { ...req.query };
+    const excludeFields = ['sort', 'page', 'limit', 'fields'];
+    excludeFields.forEach(field => delete filters[field]);
+
+    const queries = {};
+    if (req.query.sort) {
+        const sortBy = req.query.sort.split(',').join(' ');
+        queries.sort = sortBy;
+    }
+
+    if (req.query.fields) {
+        const fields = req.query.fields.split(',').join(' ');
+        queries.fields = fields;
+    }
+    if(req.query.page){
+        const { page=1 , limit=5 } = req.query;
+        const skip = (page - 1) * +limit;
+        queries.skip = skip;
+        queries.limit = +limit;
+    }
+
     try {
-        const result = await getTourServices();
+        const result = await getTourServices(filters, queries);
         res.status(200).send({
             status: 'success',
             message: "Data found Successfully.",
