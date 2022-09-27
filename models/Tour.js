@@ -40,8 +40,13 @@ const tourSchema = mongoose.Schema({
         trim: true,
         minLength: [3, 'Name must be at least 3 characters'],
         maxLength: [30, 'Name is too long']
+    },
+    viewCount: {
+        type: Number,
+        min: [0, 'viewCount can not be negative']
     }
 })
+
 
 const Tour = mongoose.model('Tour', tourSchema);
 
