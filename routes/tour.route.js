@@ -8,8 +8,12 @@ router.route('/')
 
 router.route('/trending')
     .get(tourController.getTrendingTour)
-    
+
+router.route('/cheapest')
+    .get(tourController.getCheapestTour)
+
 router.route('/:id')
     .get(tourController.getTourDetails)
     .patch(tourController.updateTourDetails)
+
 module.exports = router;
