@@ -28,14 +28,14 @@ exports.updateTourDetailsServices = async (id, data) => {
 
 exports.getTrendingTourServices = async () => {
     const tour = await Tour.find()
-        .sort({ 'viewCount': -1 })
+        .sort({ viewCount: -1 })
         .limit(3)
     return tour;
 }
 
 exports.getCheapestTourServices = async () => {
     const tour = await Tour.find()
-        .sort({ 'price': 1 })
+        .sort({ price: 1 })
         .limit(3)
     return tour;
 }
